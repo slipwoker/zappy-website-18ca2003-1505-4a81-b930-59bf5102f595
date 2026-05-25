@@ -2366,7 +2366,6 @@ Student Portal
 
 
 
-
 United States
 
 
@@ -2388,6 +2387,15 @@ Courses from  $190
 - starhunter70@gmail.com
 - [business_phone]
 - United States
+
+#### שעות פעילות
+- יום שני: 09:00 - 17:00
+- יום שלישי: 09:00 - 17:00
+- יום רביעי: 09:00 - 17:00
+- יום חמישי: 09:00 - 17:00
+- יום שישי: 09:00 - 17:00
+- יום שבת: 09:00 - 17:00
+- יום ראשון: 09:00 - 17:00
 
 ### Follow Us
 
@@ -3482,53 +3490,7 @@ Continue Shopping
 
 
 
-
-
-
-
-### Add Address
-
-×
-
-
-
-
-Address Label
-
-Home
-Work
-Other
-
-
-
-Street Address
-
-
-
-Apt, Floor, Unit
-
-
-
-City
-
-
-
-ZIP Code
-
-
-
-
-
-Set as Default
-
-
-
-
-Save Changes
-Cancel
-
-
-
+United States
 
 
 
@@ -3931,6 +3893,27 @@ Phone: [business_phone]
 
 
 Address: United States
+
+
+
+Business Hours:
+
+
+- Monday: 09:00 - 17:00
+
+- Tuesday: 09:00 - 17:00
+
+- Wednesday: 09:00 - 17:00
+
+- Thursday: 09:00 - 17:00
+
+- Friday: 09:00 - 17:00
+
+- Saturday: 09:00 - 17:00
+
+- Sunday: 09:00 - 17:00
+
+
 
 
 
