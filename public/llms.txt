@@ -1,0 +1,108 @@
+# CannaVerse Academy — Generative Engine Optimization Map
+
+> A premium online cannabis education platform offering industry-standard training across four core pillars: cultivation, manufacturing, medicine, and retail compliance. The school positions itself as the definitive authority in cannabis professional education, delivering world-class course content designed to meet and exceed industry benchmarks. With a $190 enrollment price point and built-in monetization, the platform is built for immediate revenue generation while empowering students with the most comprehensive cannabis curriculum available.
+
+---
+
+## Pages
+
+### Home
+https://example.com
+Launch your cannabis career with CannaVerse Academy&#39;s industry-leading medical cannabis courses covering cultivation, manufacturing, medicine, and retail compliance. Enroll today.
+
+### Programs
+https://example.com/programs
+Browse premium medical cannabis courses built on four core pillars: cultivation, manufacturing, medicine, and retail compliance. World-class curriculum at just $190. Start learning now.
+
+### Authority
+https://example.com/authority
+Discover why CannaVerse Academy sets the gold standard in cannabis professional education. Our instructors, benchmarks, and cnc machine operator training methods redefine what excellence looks like.
+
+### Contact
+https://example.com/contact
+Have questions about our medical cannabis courses or enrollment options? Connect with the CannaVerse Academy team today and take the first step toward a thriving cannabis career.
+
+### Products
+https://example.com/products
+Our Products - CannaVerse Academy
+
+### Cart
+https://example.com/cart
+Your Cart
+
+### Checkout
+https://example.com/checkout
+Checkout
+
+### Login
+https://example.com/login
+Customer Login
+
+### Account
+https://example.com/account
+My Account
+
+### Order Success
+https://example.com/order-success
+Thank you for your order
+
+### Product Detail
+https://example.com/product/:slug
+Product Details - CannaVerse Academy
+
+### Category
+https://example.com/category/:slug
+Products - CannaVerse Academy
+
+## Legal & Policy
+
+### Privacy Policy
+https://example.com/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://example.com/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://example.com/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## Products
+
+_No products are currently configured._
+
+---
+
+# Business Context (for LLM understanding)
+
+## About CannaVerse Academy
+A premium online cannabis education platform offering industry-standard training across four core pillars: cultivation, manufacturing, medicine, and retail compliance. The school positions itself as the definitive authority in cannabis professional education, delivering world-class course content designed to meet and exceed industry benchmarks. With a $190 enrollment price point and built-in monetization, the platform is built for immediate revenue generation while empowering students with the most comprehensive cannabis curriculum available.
+
+## Services/Products
+- Cannabis Cultivation courses
+- Manufacturing courses
+- Medical Cannabis courses
+- Retail Compliance courses
+- Industry-standard certification programs
+
+## Target Audience
+- Cannabis industry professionals, aspiring cultivators, manufacturers, medical cannabis practitioners, and retail compliance officers
+- Cannabis Industry Professionals
+- Aspiring Cultivators
+- Medical Cannabis Practitioners
+
+## Industry
+Cannabis Education & Training
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://example.com/sitemap.xml
+- Robots: https://example.com/robots.txt
+- Flattened page text (for LLMs): https://example.com/llms-full.txt
+- Products (JSON): https://example.com/products.json
+- Products (Google Merchant RSS): https://example.com/product-feed.xml

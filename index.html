@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Master Cannabis From Root to Retail — CannaVerse Academy</title>
+    <meta name="description" content="Launch your cannabis career with CannaVerse Academy&#39;s industry-leading medical cannabis courses covering cultivation, manufacturing, medicine, and retail compliance. Enroll today.">
+    <meta name="keywords" content="Medical Cannabis courses, cannabis education platform, online cannabis training, cannabis career certification, cannabis industry courses">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '18ca2003-1505-4a81-b930-59bf5102f595',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="Master Cannabis From Root to Retail — CannaVerse Academy">
+    <meta property="og:description" content="Launch your cannabis career with CannaVerse Academy&#39;s industry-leading medical cannabis courses covering cultivation, manufacturing, medicine, and retail compliance. Enroll today.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Master Cannabis From Root to Retail — CannaVerse Academy">
+    <meta name="twitter:description" content="Launch your cannabis career with CannaVerse Academy&#39;s industry-leading medical cannabis courses covering cultivation, manufacturing, medicine, and retail compliance. Enroll today.">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+
+
+    <div class="mobile-search-panel" id="mobile-search-panel">
+      <div class="search-wrapper">
+        <input type="text" id="mobile-search-input" placeholder="Search products..." autocomplete="off">
+        <button class="search-submit" id="mobile-search-submit" title="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+        </button>
+        <button class="close-search" id="close-mobile-search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="search-results" id="mobile-search-results"></div>
+    </div>
+  
+<script>window.ZAPPY_WEBSITE_ID = "18ca2003-1505-4a81-b930-59bf5102f595";window.ZAPPY_API_BASE = "https://api.zappy5.com";</script><a class="skip-link" href="#main">Skip to main content</a>
+  <nav class="navbar">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <button class="phone-header-btn" data-phone="" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site-home-image-1.webp" alt="CannaVerse Academy"></a>
+    </div>
+
+    <ul class="nav-menu" id="navMenu">
+
+    <li class="menu-item-has-children zappy-products-dropdown">
+      <a href="/en/products">
+        Products
+        <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </a>
+      <ul class="sub-menu" id="zappy-nav-category-links">
+        <li><a href="/en/products">All Courses</a></li>
+        <!-- Categories will be loaded dynamically -->
+      </ul>
+    </li>
+  <li><a href="/">Home</a></li><li><a href="/programs">Programs</a></li><li><a href="/authority">Authority</a></li><li><a href="/contact">Contact</a></li></ul><div class="nav-ecommerce-icons nav-icons-left"><a href="/login" class="login-link nav-login" title="Login"><svg class="login-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a><a href="#cart" class="cart-link nav-cart" id="cart-drawer-toggle" title="Cart"><svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><span class="cart-count">0</span></a><div class="nav-search-box">
+    <input type="text" class="nav-search-input" id="nav-search-input" placeholder="Search products..." autocomplete="off">
+    <button class="nav-search-btn" id="nav-search-btn" title="Search">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    </button>
+    <div class="nav-search-results" id="nav-search-results"></div>
+  </div></div><div class="nav-ecommerce-icons nav-icons-right"><button class="nav-search-toggle" id="mobile-search-toggle" title="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg></button></div>
+
+    
+  </div>
+</nav>
+
+    <nav class="zappy-catalog-menu ltr" id="zappy-catalog-menu" dir="ltr" style="display:none">
+      <div class="catalog-menu-container">
+        <a href="/en/products" class="catalog-menu-item catalog-menu-all">All Courses</a>
+        <div class="catalog-menu-categories" id="zappy-category-links">
+          <!-- Categories will be loaded dynamically -->
+        </div>
+      </div>
+    </nav>
+  
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-dark)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section data-band-index="0" class="home-hero-section" data-layout-spec="Home-hero" data-hero-type="fullscreen-scrim">
+  <!-- Background Image -->
+  <div class="home-hero-bg">
+    <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="home-hero-image-1" data-context="Bright cinematic documentary-style photograph of a modern cannabis education environment. Wide shot showing four distinct zones in one open, well-lit professional space: a cultivation area with lush green cannabis plants under scientific grow lights, a clean manufacturing/extraction lab with stainless equipment, a medical consultation corner with a professional in a white coat reviewing documents, and a compliant retail display case with labeled products. Warm natural light combined with cool laboratory lighting. Polished floors, institutional cleanliness, and a sense of serious professional training. Color-graded with slightly elevated greens and warm highlights. No people smoking. Academic and aspirational atmosphere." width="1400" height="900" src="/assets/site-home-hero-image-1.webp" alt="CannaVerse Academy cannabis education environment showing cultivation, manufacturing, medical, and retail compliance training areas">
+  </div>
+
+  <!-- Scrim Overlay -->
+  <div class="home-hero-scrim" aria-hidden="true"></div>
+
+  <!-- Cannabis Leaf Watermark -->
+  <svg class="home-hero-leaf-watermark" data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <path d="M100 10 C100 10 60 40 55 80 C50 120 70 140 100 160 C130 140 150 120 145 80 C140 40 100 10 100 10Z" stroke="#1E4D35" stroke-width="1.5" fill="none" opacity="0.5"></path>
+    <path d="M100 40 C100 40 40 50 30 90 C20 130 60 150 100 160 C140 150 180 130 170 90 C160 50 100 40 100 40Z" stroke="#1E4D35" stroke-width="1.5" fill="none" opacity="0.4"></path>
+    <path d="M100 60 C100 60 30 55 20 100 C10 145 60 160 100 170 C140 160 190 145 180 100 C170 55 100 60 100 60Z" stroke="#1E4D35" stroke-width="1.5" fill="none" opacity="0.3"></path>
+    <line x1="100" y1="160" x2="100" y2="210" stroke="#1E4D35" stroke-width="1.5" opacity="0.5"></line>
+  </svg>
+
+  <!-- Main Content -->
+  <div class="home-hero-container">
+    <div class="home-hero-card">
+
+      <!-- Credibility Line -->
+      <div class="home-hero-credibility">
+        <span class="home-hero-credibility-bar"></span>
+        <span class="home-hero-credibility-text">Premium Professional Cannabis Training</span>
+        <span class="home-hero-credibility-bar"></span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="home-hero-h1">The Industry Standard in<br><em>Cannabis Education</em></h1>
+
+      <!-- Subtitle -->
+      <h3 class="home-hero-subtitle">Master all four professional pillars — cultivation, manufacturing, medicine, and retail compliance — through world-class curriculum built for immediate career readiness.</h3>
+
+      <!-- Pillar Tags -->
+      <div class="home-hero-pillars" aria-label="Course pillars">
+        <span class="home-hero-pillar"><i class="fa-solid fa-seedling" aria-hidden="true"></i> Cultivation</span>
+        <span class="home-hero-pillar"><i class="fa-solid fa-flask" aria-hidden="true"></i> Manufacturing</span>
+        <span class="home-hero-pillar"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i> Medicine</span>
+        <span class="home-hero-pillar"><i class="fa-solid fa-store" aria-hidden="true"></i> Retail Compliance</span>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="home-hero-ctas">
+        <a href="#enroll" class="home-hero-btn-primary">
+          <span class="home-hero-btn-label">Enroll Now</span>
+          <span class="home-hero-btn-price">$190</span>
+        </a>
+        <a href="#curriculum" class="home-hero-btn-secondary">Explore the Curriculum <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+
+      <!-- Trust Note -->
+      <p class="home-hero-trust"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Industry-standard certification &nbsp;·&nbsp; Instant access upon enrollment</p>
+
+    </div>
+  </div>
+
+  <!-- Seal Badge Decoration -->
+  <div class="home-hero-seal-wrapper" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <circle cx="70" cy="70" r="66" stroke="#C89B3C" stroke-width="1.5" opacity="0.85"></circle>
+      <circle cx="70" cy="70" r="58" stroke="#C89B3C" stroke-width="0.75" opacity="0.6"></circle>
+      <circle cx="70" cy="70" r="50" stroke="#C89B3C" stroke-width="0.5" opacity="0.45"></circle>
+      <text x="70" y="64" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="9" font-weight="600" letter-spacing="2" fill="#C89B3C" opacity="0.9">CANNAVERSE</text>
+      <text x="70" y="76" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="7" letter-spacing="1.5" fill="#C89B3C" opacity="0.8">ACADEMY</text>
+      <text x="70" y="88" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="6" letter-spacing="1" fill="#C89B3C" opacity="0.7">EST. MMXXIV</text>
+      <path d="M42 95 Q70 108 98 95" stroke="#C89B3C" stroke-width="0.75" fill="none" opacity="0.6"></path>
+      <path d="M42 45 Q70 32 98 45" stroke="#C89B3C" stroke-width="0.75" fill="none" opacity="0.6"></path>
+    </svg>
+  </div>
+
+  <!-- Bottom Divider -->
+  <div class="home-hero-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 64" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,64 L0,32 L1440,8 L1440,64 Z" fill="#FAFAF8"></path>
+      <line x1="0" y1="32" x2="1440" y2="8" stroke="#C89B3C" stroke-width="0.75" opacity="0.45"></line>
+    </svg>
+  </div>
+
+</section>
+
+    <section class="featured-products-section" id="featured-products" data-zappy-dynamic="true">
+      <div class="container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="product-grid featured-grid" id="zappy-featured-products">
+          <div class="loading-products">Loading products...</div>
+        </div>
+        <div class="view-all-products">
+          <a href="/products" class="btn btn-primary">View All Courses →</a>
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="featured-categories-section" id="featured-categories" data-zappy-dynamic="true">
+      <div class="container">
+        <h2 class="section-title">Shop by Category</h2>
+        <div class="category-blocks" id="zappy-featured-categories">
+          <div class="loading-categories">Loading products...</div>
+        </div>
+      </div>
+    </section>
+  
+
+<section data-band-index="1" class="home-features-section" data-layout-spec="Home-features">
+  <div class="home-features-container">
+
+    <!-- Gold Divider Flourish -->
+    <div class="home-features-flourish" aria-hidden="true">
+      <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 240 20" width="240" height="20" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="10" x2="95" y2="10" stroke="#C89B3C" stroke-width="1" opacity="0.7"></line>
+        <path d="M120,2 C122,5 126,8 120,10 C114,8 118,5 120,2Z M116,6 C118,8 120,10 120,10 C120,10 122,8 124,6 C122,7 120,9 120,9 C120,9 118,7 116,6Z" fill="#C89B3C" opacity="0.8"></path>
+        <circle cx="120" cy="10" r="3.5" fill="none" stroke="#C89B3C" stroke-width="0.8" opacity="0.8"></circle>
+        <line x1="145" y1="10" x2="240" y2="10" stroke="#C89B3C" stroke-width="1" opacity="0.7"></line>
+      </svg>
+    </div>
+
+    <!-- Centered Intro Block -->
+    <div class="home-features-intro">
+      <p class="home-features-eyebrow">Academic Curriculum</p>
+      <h2 class="home-features-heading">Four Pillars of Cannabis Professional Education</h2>
+      <p class="home-features-subheading">CannaVerse Academy delivers the most comprehensive medical cannabis courses available — each module engineered to meet and exceed industry benchmarks, preparing you for a verified career in the legal cannabis sector.</p>
+    </div>
+
+    <!-- 2x2 Program Cards Grid -->
+    <div class="home-features-grid">
+
+      <!-- Card 1: Cultivation -->
+      <article class="home-features-card">
+        <div class="home-features-card-accent" aria-hidden="true"></div>
+        <div class="home-features-card-inner">
+          <div class="home-features-card-header">
+            <span class="home-features-card-number">01</span>
+            <h3 class="home-features-card-title">Cannabis Cultivation</h3>
+          </div>
+          <p class="home-features-card-description">Master the complete lifecycle of cannabis cultivation — from genetics and propagation to harvest optimization — using methods validated by licensed growers and regulatory bodies.</p>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">What You Will Master</p>
+            <ul class="home-features-card-bullets">
+              <li>Plant biology, genetics, and strain selection</li>
+              <li>Indoor, outdoor, and greenhouse growing systems</li>
+              <li>Integrated pest management and environmental controls</li>
+              <li>Harvest, drying, curing, and quality assessment</li>
+              <li>Regulatory compliance for cultivation facilities</li>
+            </ul>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Designed For</p>
+            <p class="home-features-card-meta">Aspiring cultivators, farm managers, greenhouse operators, and agricultural professionals entering the cannabis industry.</p>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Industry Alignment</p>
+            <p class="home-features-card-meta">Curriculum meets state licensing requirements and Good Agricultural Practice (GAP) standards for legal cannabis cultivation.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Manufacturing -->
+      <article class="home-features-card">
+        <div class="home-features-card-accent" aria-hidden="true"></div>
+        <div class="home-features-card-inner">
+          <div class="home-features-card-header">
+            <span class="home-features-card-number">02</span>
+            <h3 class="home-features-card-title">Cannabis Manufacturing</h3>
+          </div>
+          <p class="home-features-card-description">Gain expert-level proficiency in cannabis extraction, product formulation, and GMP-compliant manufacturing — the technical foundation for every licensed processing facility.</p>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">What You Will Master</p>
+            <ul class="home-features-card-bullets">
+              <li>Extraction methods: CO₂, ethanol, hydrocarbon, and solventless</li>
+              <li>Post-processing, distillation, and winterization</li>
+              <li>Edibles, tinctures, topicals, and concentrate formulation</li>
+              <li>Quality control, lab testing, and COA interpretation</li>
+              <li>Lean manufacturing principles and facility SOP development</li>
+            </ul>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Designed For</p>
+            <p class="home-features-card-meta">Extraction technicians, product developers, lab managers, and manufacturing professionals seeking cannabis industry credentials.</p>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Industry Alignment</p>
+            <p class="home-features-card-meta">Aligned with GMP, ISO 22000, and state-specific manufacturing compliance frameworks for licensed cannabis processors.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Medicine -->
+      <article class="home-features-card">
+        <div class="home-features-card-accent" aria-hidden="true"></div>
+        <div class="home-features-card-inner">
+          <div class="home-features-card-header">
+            <span class="home-features-card-number">03</span>
+            <h3 class="home-features-card-title">Cannabis Medicine</h3>
+          </div>
+          <p class="home-features-card-description">Develop a rigorous clinical and scientific understanding of cannabis therapeutics — the knowledge that separates credentialed professionals from uninformed practitioners in the medical cannabis space.</p>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">What You Will Master</p>
+            <ul class="home-features-card-bullets">
+              <li>Endocannabinoid system, cannabinoids, and terpene pharmacology</li>
+              <li>Evidence-based therapeutic applications and contraindications</li>
+              <li>Patient assessment, dosing protocols, and delivery methods</li>
+              <li>Medical cannabis program regulations and caregiver compliance</li>
+              <li>Integrating cannabis into clinical and wellness practice</li>
+            </ul>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Designed For</p>
+            <p class="home-features-card-meta">Healthcare providers, wellness consultants, patient advocates, caregivers, and professionals advising medical cannabis patients.</p>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Industry Alignment</p>
+            <p class="home-features-card-meta">Content is grounded in peer-reviewed clinical research and state medical cannabis program certification standards.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: Retail Compliance -->
+      <article class="home-features-card">
+        <div class="home-features-card-accent" aria-hidden="true"></div>
+        <div class="home-features-card-inner">
+          <div class="home-features-card-header">
+            <span class="home-features-card-number">04</span>
+            <h3 class="home-features-card-title">Retail &amp; Compliance</h3>
+          </div>
+          <p class="home-features-card-description">Command every dimension of cannabis retail operations and regulatory compliance — the essential competency for dispensary professionals, license holders, and compliance officers navigating the legal market.</p>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">What You Will Master</p>
+            <ul class="home-features-card-bullets">
+              <li>Dispensary operations, inventory management, and POS systems</li>
+              <li>State seed-to-sale tracking (METRC, BioTrackTHC)</li>
+              <li>Responsible vendor training and age verification protocols</li>
+              <li>Anti-diversion, security, and recordkeeping requirements</li>
+              <li>Customer education, product knowledge, and sales compliance</li>
+            </ul>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Designed For</p>
+            <p class="home-features-card-meta">Dispensary managers, budtenders, license applicants, compliance officers, and retail entrepreneurs entering cannabis commerce.</p>
+          </div>
+          <div class="home-features-card-section">
+            <p class="home-features-card-label">Industry Alignment</p>
+            <p class="home-features-card-meta">Curriculum maps directly to state cannabis control board requirements and Responsible Vendor Program (RVP) certification standards.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <!-- End Grid -->
+
+    <!-- Enrollment CTA Strip -->
+    <div class="home-features-cta">
+      <p class="home-features-cta-text">Full access to all four academic pillars — one enrollment, one price.</p>
+      <a href="/enroll" class="home-features-btn-primary">Enroll Now — $190</a>
+    </div>
+
+  </div>
+
+  <!-- Bottom Curved Divider -->
+  <div class="home-features-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,48 Q180,10 360,38 Q540,62 720,30 Q900,2 1080,36 Q1260,64 1440,28 L1440,80 Z" fill="#1A2E22" opacity="0.55"></path>
+      <path d="M0,80 L0,58 Q200,28 400,50 Q600,70 720,44 Q900,18 1100,48 Q1280,68 1440,42 L1440,80 Z" fill="#1A2E22"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section data-band-index="2" class="home-stats-section" data-layout-spec="Home-stats">
+  <div class="home-stats-container">
+
+    <!-- Section Header -->
+    <div class="home-stats-header">
+      <span class="home-stats-eyebrow">By the Numbers</span>
+      <h2 class="home-stats-heading">Training Built for Professional Advancement</h2>
+      <p class="home-stats-subhead">CannaVerse Academy delivers industry-standard medical cannabis courses structured around four professional pillars — giving students a clear, credentialed path into the cannabis industry.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="home-stats-grid">
+
+      <article class="home-stat-card">
+        <div class="home-stat-number">4</div>
+        <div class="home-stat-brass-rule"></div>
+        <h3 class="home-stat-label">Core Industry Pillars</h3>
+        <p class="home-stat-desc">Cultivation, Manufacturing, Medicine, and Retail Compliance — the four domains shaping the modern cannabis professional landscape.</p>
+      </article>
+
+      <article class="home-stat-card">
+        <div class="home-stat-number">100<span class="home-stat-unit">%</span></div>
+        <div class="home-stat-brass-rule"></div>
+        <h3 class="home-stat-label">Premium Curriculum</h3>
+        <p class="home-stat-desc">Every module is crafted to meet and exceed industry benchmarks, delivering world-class content that positions graduates as credentialed authorities.</p>
+      </article>
+
+      <article class="home-stat-card">
+        <div class="home-stat-number">1<span class="home-stat-unit">st</span></div>
+        <div class="home-stat-brass-rule"></div>
+        <h3 class="home-stat-label">Compliance-First Approach</h3>
+        <p class="home-stat-desc">Practical regulatory compliance is woven throughout every course — ensuring students are ready for real-world operations from day one.</p>
+      </article>
+
+      <article class="home-stat-card">
+        <div class="home-stat-number">$190</div>
+        <div class="home-stat-brass-rule"></div>
+        <h3 class="home-stat-label">Enrollment Entry Point</h3>
+        <p class="home-stat-desc">Full access to the most comprehensive cannabis curriculum available — a single, transparent enrollment fee with no hidden costs.</p>
+      </article>
+
+    </div>
+
+    <!-- Enrollment Side Note -->
+    <aside class="home-stats-enrollment-note">
+      <div class="home-stats-note-inner">
+        <div class="home-stats-note-icon">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div class="home-stats-note-content">
+          <strong class="home-stats-note-title">Ready to Enroll?</strong>
+          <p class="home-stats-note-text">A secure payment link is made available immediately upon contact submission. Your $190 enrollment grants full access to all four professional pillars — no waiting, no complexity.</p>
+          <a href="/contact" class="home-stats-note-cta">Request Enrollment Link</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Bottom Divider: gradient fade from deep green into warm off-white with brass separator -->
+  <div class="home-stats-divider-wrapper" aria-hidden="true">
+    <div class="home-stats-brass-separator"></div>
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="statsGradFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1A2E22" stop-opacity="0"></stop>
+          <stop offset="100%" stop-color="#FAFAF7" stop-opacity="1"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,72 L0,0 L1200,0 L1200,72 Z" fill="#FAFAF8"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section data-band-index="3" class="home-testimonials-section" data-layout-spec="Home-testimonials">
+  <div class="home-testimonials-container">
+
+    <!-- Intro Block -->
+    <div class="home-testimonials-intro">
+      <div class="home-testimonials-intro-inner">
+        <span class="home-testimonials-eyebrow">Student Outcomes</span>
+        <h2 class="home-testimonials-heading">Trusted by Cannabis Professionals at Every Stage</h2>
+        <p class="home-testimonials-subtext">Our curriculum is built to industry standards — rigorous, relevant, and designed to advance real careers across cultivation, medicine, manufacturing, and retail compliance.</p>
+      </div>
+      <!-- Gold divider flourish -->
+      <div class="home-testimonials-flourish" aria-hidden="true">
+        <svg data-no-icon-edit="true" aria-hidden="true" width="160" height="16" viewBox="0 0 160 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="8" x2="60" y2="8" stroke="#C89B3C" stroke-width="1" stroke-opacity="0.7"></line>
+          <circle cx="80" cy="8" r="3" fill="#C89B3C" fill-opacity="0.8"></circle>
+          <circle cx="80" cy="8" r="6" stroke="#C89B3C" stroke-width="0.8" stroke-opacity="0.4"></circle>
+          <line x1="100" y1="8" x2="160" y2="8" stroke="#C89B3C" stroke-width="1" stroke-opacity="0.7"></line>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Main Content: Cards + Trust Panel -->
+    <div class="home-testimonials-main">
+
+      <!-- Three Testimonial Cards -->
+      <div class="home-testimonials-grid">
+
+        <!-- Card 1: Cultivator -->
+        <article class="home-testimonials-card">
+          <div class="home-testimonials-card-accent" aria-hidden="true"></div>
+          <div class="home-testimonials-card-body">
+            <div class="home-testimonials-quote-mark" aria-hidden="true">“</div>
+            <blockquote class="home-testimonials-quote">
+              The cultivation curriculum gave me a framework I couldn't find anywhere else — from seed genetics to harvest protocols. I walked into my first grow operation interview with genuine confidence.
+            </blockquote>
+            <footer class="home-testimonials-card-footer">
+              <div class="home-testimonials-avatar">
+                <img loading="lazy" decoding="async" data-placeholder="testimonial-cultivator-avatar" data-context="Professional headshot of a young male cannabis cultivator student, natural warm lighting, clean background, trustworthy and confident expression" width="48" height="48" src="/assets/site-testimonial-cultivator-avatar.webp" alt="Marcus T., Cultivation Track Student">
+              </div>
+              <div class="home-testimonials-author">
+                <cite class="home-testimonials-author-name">Marcus T.</cite>
+                <span class="home-testimonials-author-role">Aspiring Cultivator — Colorado</span>
+                <span class="home-testimonials-pillar-tag home-testimonials-pillar-cultivation">Cultivation Track</span>
+              </div>
+            </footer>
+          </div>
+        </article>
+
+        <!-- Card 2: Medical Practitioner -->
+        <article class="home-testimonials-card">
+          <div class="home-testimonials-card-accent" aria-hidden="true"></div>
+          <div class="home-testimonials-card-body">
+            <div class="home-testimonials-quote-mark" aria-hidden="true">“</div>
+            <blockquote class="home-testimonials-quote">
+              As a healthcare professional exploring medical cannabis courses, I needed evidence-based content. CannaVerse Academy delivered — the pharmacology and patient advisory modules are exceptional.
+            </blockquote>
+            <footer class="home-testimonials-card-footer">
+              <div class="home-testimonials-avatar">
+                <img loading="lazy" decoding="async" data-placeholder="testimonial-medical-avatar" data-context="Professional headshot of a female medical cannabis practitioner, clean clinical setting, warm professional lighting, knowledgeable and composed expression" width="48" height="48" src="/assets/site-testimonial-medical-avatar.webp" alt="Dr. Priya S., Medicine Track Graduate">
+              </div>
+              <div class="home-testimonials-author">
+                <cite class="home-testimonials-author-name">Dr. Priya S.</cite>
+                <span class="home-testimonials-author-role">Medical Cannabis Practitioner — California</span>
+                <span class="home-testimonials-pillar-tag home-testimonials-pillar-medicine">Medicine Track</span>
+              </div>
+            </footer>
+          </div>
+        </article>
+
+        <!-- Card 3: Retail Compliance -->
+        <article class="home-testimonials-card">
+          <div class="home-testimonials-card-accent" aria-hidden="true"></div>
+          <div class="home-testimonials-card-body">
+            <div class="home-testimonials-quote-mark" aria-hidden="true">“</div>
+            <blockquote class="home-testimonials-quote">
+              I needed to understand state compliance requirements before opening my dispensary. This program covered every regulation in clear, actionable terms. Worth every dollar of the $190 enrollment.
+            </blockquote>
+            <footer class="home-testimonials-card-footer">
+              <div class="home-testimonials-avatar">
+                <img loading="lazy" decoding="async" data-placeholder="testimonial-retail-avatar" data-context="Professional headshot of a Black woman retail compliance cannabis student, modern dispensary background, confident and professional expression, soft lighting" width="48" height="48" src="/assets/site-testimonial-retail-avatar.webp" alt="Janelle R., Retail Compliance Track Student">
+              </div>
+              <div class="home-testimonials-author">
+                <cite class="home-testimonials-author-name">Janelle R.</cite>
+                <span class="home-testimonials-author-role">Dispensary Owner — Michigan</span>
+                <span class="home-testimonials-pillar-tag home-testimonials-pillar-retail">Retail Compliance Track</span>
+              </div>
+            </footer>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Trust Panel (slim vertical) -->
+      <aside class="home-testimonials-trust-panel">
+        <div class="home-testimonials-trust-inner">
+          <div class="home-testimonials-trust-seal" aria-hidden="true">
+            <svg data-no-icon-edit="true" aria-hidden="true" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="30" stroke="#C89B3C" stroke-width="1.2" stroke-opacity="0.7"></circle>
+              <circle cx="32" cy="32" r="24" stroke="#C89B3C" stroke-width="0.8" stroke-opacity="0.5"></circle>
+              <circle cx="32" cy="32" r="18" stroke="#C89B3C" stroke-width="0.6" stroke-opacity="0.4"></circle>
+              <path d="M32 18 L34 26 L42 26 L36 31 L38 39 L32 34 L26 39 L28 31 L22 26 L30 26 Z" fill="#C89B3C" fill-opacity="0.75"></path>
+            </svg>
+          </div>
+          <h3 class="home-testimonials-trust-heading">Curriculum Built to Industry Standards</h3>
+          <ul class="home-testimonials-trust-list">
+            <li class="home-testimonials-trust-item">
+              <span class="home-testimonials-trust-icon" aria-hidden="true">
+                <svg data-element-type="icon" data-icon-type="svg" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="2,7 5.5,10.5 12,3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+              </span>
+              <span>4 Core Pillars of Cannabis Education</span>
+            </li>
+            <li class="home-testimonials-trust-item">
+              <span class="home-testimonials-trust-icon" aria-hidden="true">
+                <svg data-element-type="icon" data-icon-type="svg" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="2,7 5.5,10.5 12,3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+              </span>
+              <span>State Compliance &amp; Regulatory Frameworks</span>
+            </li>
+            <li class="home-testimonials-trust-item">
+              <span class="home-testimonials-trust-icon" aria-hidden="true">
+                <svg data-element-type="icon" data-icon-type="svg" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="2,7 5.5,10.5 12,3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+              </span>
+              <span>Developed by Industry Practitioners</span>
+            </li>
+            <li class="home-testimonials-trust-item">
+              <span class="home-testimonials-trust-icon" aria-hidden="true">
+                <svg data-element-type="icon" data-icon-type="svg" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="2,7 5.5,10.5 12,3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+              </span>
+              <span>Career-Relevant Outcomes at Every Level</span>
+            </li>
+            <li class="home-testimonials-trust-item">
+              <span class="home-testimonials-trust-icon" aria-hidden="true">
+                <svg data-element-type="icon" data-icon-type="svg" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="2,7 5.5,10.5 12,3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+              </span>
+              <span>Comprehensive Curriculum Depth</span>
+            </li>
+          </ul>
+          <div class="home-testimonials-trust-divider" aria-hidden="true"></div>
+          <p class="home-testimonials-trust-note">Enroll for <strong>$190</strong> and gain immediate access to the most comprehensive cannabis professional training available online.</p>
+          <a href="/enroll" class="home-testimonials-trust-cta">Enroll Now</a>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Bottom Backplate Accent -->
+  <div class="home-testimonials-backplate" aria-hidden="true"></div>
+
+  <!-- Bottom Divider -->
+  <div class="home-testimonials-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 72" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,72 L0,52 L200,42 L400,56 L600,38 L800,52 L1000,40 L1200,50 L1200,72 Z" fill="#1A2E22"></path>
+    </svg>
+  </div>
+
+</section>
+
+<section data-band-index="4" class="home-cta-section" data-layout-spec="Home-cta">
+  <!-- Decorative background motifs -->
+  <div class="home-cta-section__leaf-watermark" aria-hidden="true">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" width="320" height="352">
+      <path d="M100 10 C100 10 20 60 20 120 C20 165 55 195 100 210 C145 195 180 165 180 120 C180 60 100 10 100 10Z" stroke="#C89B3C" stroke-width="1.5" fill="none" opacity="0.12"></path>
+      <path d="M100 10 C100 10 140 70 130 130 C125 160 112 185 100 210" stroke="#C89B3C" stroke-width="1" fill="none" opacity="0.1"></path>
+      <path d="M100 10 C100 10 60 70 70 130 C75 160 88 185 100 210" stroke="#C89B3C" stroke-width="1" fill="none" opacity="0.1"></path>
+      <path d="M40 80 C60 75 80 85 100 80 C120 75 140 65 160 75" stroke="#C89B3C" stroke-width="1" fill="none" opacity="0.08"></path>
+      <path d="M30 110 C55 100 75 115 100 108 C125 100 148 112 170 105" stroke="#C89B3C" stroke-width="1" fill="none" opacity="0.08"></path>
+      <path d="M35 140 C58 130 78 145 100 138 C122 130 145 142 165 135" stroke="#C89B3C" stroke-width="1" fill="none" opacity="0.08"></path>
+      <line x1="100" y1="210" x2="100" y2="220" stroke="#C89B3C" stroke-width="1.5" opacity="0.12"></line>
+    </svg>
+  </div>
+
+  <div class="home-cta-section__container">
+    <!-- Brass-outlined panel -->
+    <div class="home-cta-section__panel">
+      <!-- Top brass accent line with centered ornament -->
+      <div class="home-cta-section__brass-ornament" aria-hidden="true">
+        <span class="home-cta-section__brass-line"></span>
+        <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2 C12 2 5 7 5 13 C5 17.4 8.1 20.5 12 22 C15.9 20.5 19 17.4 19 13 C19 7 12 2 12 2Z" stroke="#C89B3C" stroke-width="1.2" fill="none"></path>
+          <path d="M12 2 C12 2 14.5 8 14 13 C13.7 16 13 19 12 22" stroke="#C89B3C" stroke-width="0.8" fill="none"></path>
+          <path d="M12 2 C12 2 9.5 8 10 13 C10.3 16 11 19 12 22" stroke="#C89B3C" stroke-width="0.8" fill="none"></path>
+        </svg>
+        <span class="home-cta-section__brass-line"></span>
+      </div>
+
+      <!-- Eyebrow label -->
+      <p class="home-cta-section__eyebrow">Professional Cannabis Education</p>
+
+      <!-- Main heading -->
+      <h2 class="home-cta-section__heading">Begin Your Cannabis Career<br>at the Industry Standard</h2>
+
+      <!-- Supporting paragraph -->
+      <p class="home-cta-section__body">CannaVerse Academy delivers the most comprehensive medical cannabis courses available — spanning cultivation science, manufacturing processes, medicinal applications, and retail compliance. Every module is built to industry benchmarks, equipping you with the credentials and knowledge to lead in the fastest-growing sector in the world.</p>
+
+      <!-- CTA buttons -->
+      <div class="home-cta-section__cta-group">
+        <a href="/enroll" class="home-cta-section__btn home-cta-section__btn--primary">
+          Start Enrollment — $190
+        </a>
+        <a href="/contact" class="home-cta-section__btn home-cta-section__btn--secondary">
+          Contact Admissions
+        </a>
+      </div>
+
+      <!-- Reassurance line -->
+      <p class="home-cta-section__reassurance">
+        <svg data-element-type="icon" data-icon-type="svg" aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0;">
+          <rect x="2" y="6" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"></rect>
+          <path d="M5 6V4.5a3 3 0 0 1 6 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"></path>
+          <circle cx="8" cy="10.5" r="1.2" fill="currentColor"></circle>
+        </svg>
+        <span>Secure payment link delivered directly to your inbox — guided enrollment support included every step of the way.</span>
+      </p>
+
+      <!-- Bottom brass accent line -->
+      <div class="home-cta-section__brass-ornament home-cta-section__brass-ornament--bottom" aria-hidden="true">
+        <span class="home-cta-section__brass-line"></span>
+        <span class="home-cta-section__brass-diamond"></span>
+        <span class="home-cta-section__brass-line"></span>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer" aria-label="Site Footer"><div class="footer-container"><div class="footer-top"><div class="footer-col footer-col--brand"><div class="footer-logo-wrap"><img src="/assets/cannaverse-academy-cannabis-education-training-logo.webp" alt="CannaVerse Academy" class="logo"></div><p class="footer-tagline">The official academic authority for cannabis professional education — structured, premium, and built for the modern industry professional.</p><div class="footer-badge"><span class="badge-icon"><i class="fas fa-graduation-cap"></i></span><span class="badge-text">Courses from <strong>$190</strong></span></div></div><div class="footer-col footer-col--links"><h3 class="footer-heading"><span class="heading-accent"></span>Quick Links</h3><ul class="footer-nav"><li><a href="/">Home</a></li><li><a href="/programs">Programs</a></li><li><a href="/authority">Authority</a></li><li><a href="/contact">Contact</a></li></ul></div><div class="footer-col footer-col--contact"><h3 class="footer-heading"><span class="heading-accent"></span>Contact Us</h3><ul class="footer-contact"><li><span class="contact-icon"><i class="fas fa-envelope"></i></span><span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span></li><li><span class="contact-icon"><i class="fas fa-phone"></i></span><span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span></li><li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span><span class="contact-text">[business_address]</span></a></li></ul></div><div class="footer-col footer-col--social"><h3 class="footer-heading"><span class="heading-accent"></span>Follow Us</h3><p class="footer-social-blurb">Stay connected for course updates, industry news, and enrollment alerts.</p><div class="footer-social-icons"></div></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copyright">© 2026 CannaVerse Academy. All rights reserved.</p><div class="footer-bottom-right"><nav class="footer-legal" aria-label="Legal links"><a href="/privacy">Privacy Policy</a><span class="legal-sep" aria-hidden="true">·</span><a href="/terms">Terms &amp; Conditions</a><span class="separator">|</span>
+            <a href="/return-policy" aria-label="Return Policy">
+              Return Policy
+            </a><span class="legal-sep" aria-hidden="true">·</span><a href="/accessibility">Accessibility</a></nav><a href="https://zappy5.com" target="_blank" class="zappy-attribution" rel="noopener noreferrer">Generated by Zappy</a></div></div></div></footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
